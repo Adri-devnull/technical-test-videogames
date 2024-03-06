@@ -1,6 +1,7 @@
+import { GENDERS } from '../../constants/genders';
 import { PLATFORMS } from '../../constants/platforms';
 
-const Filters = ({ setGameName, setPlatform }) => {
+const Filters = ({ setGameName, setPlatform, setGender }) => {
 	return (
 		<div>
 			<form onSubmit={event => getGameName(event, setGameName)}>
@@ -9,7 +10,6 @@ const Filters = ({ setGameName, setPlatform }) => {
 			</form>
 			<select
 				name='platform'
-				id='platform'
 				onChange={event =>
 					getFilterPlatformValue(event.target.value, setPlatform)
 				}
@@ -17,6 +17,16 @@ const Filters = ({ setGameName, setPlatform }) => {
 				{PLATFORMS.map(platform => (
 					<option key={platform.id} value={platform.value}>
 						{platform.name}
+					</option>
+				))}
+			</select>
+			<select
+				name='gender'
+				onChange={event => getFilterGenderValue(event.target.value, setGender)}
+			>
+				{GENDERS.map(gender => (
+					<option key={gender.id} value={gender.slug}>
+						{gender.name}
 					</option>
 				))}
 			</select>
@@ -34,6 +44,11 @@ const getGameName = (event, setGameName) => {
 // FUNCION PARA OBTENER EL VALOR DEL FILTRO DE PLATAFORMA
 const getFilterPlatformValue = (value, setPlatform) => {
 	setPlatform(value);
+};
+
+// FUNCION PARA OBTENER VALOR DEL FILTRO POR GENERO
+const getFilterGenderValue = (value, setGender) => {
+	setGender(value);
 };
 
 export default Filters;

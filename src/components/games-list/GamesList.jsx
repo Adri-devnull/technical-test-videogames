@@ -1,20 +1,32 @@
+import { useState } from 'react';
+import GameInfo from '../game-info/GameInfo';
+import Modal from '../modal/Modal';
 import { StyledImg } from './styles';
 
 const GamesList = ({ filteredGames, page, setPage }) => {
+	const [content, setContent] = useState('');
 	return (
-		<div>
-			<h2>Lista de juegos</h2>
-			{filteredGames.map(game => (
-				<div key={game.id}>
-					<h3>{game.name}</h3>
-					<StyledImg src={game.background_image} alt='' />
-				</div>
-			))}
+		<>
 			<div>
-				<button onClick={() => handlePrevGames(page, setPage)}>Prev</button>
-				<button onClick={() => setPage(page + 1)}>Next</button>
+				<h2>Lista de juegos</h2>
+				{filteredGames.map(game => (
+					<div
+						key={game.id}
+						onClick={() =>
+							setContent(<GameInfo setContent={setContent} game={game} />)
+						}
+					>
+						<h3>{game.name}</h3>
+						<StyledImg src={game.background_image} alt='' />
+					</div>
+				))}
+				<div>
+					<button onClick={() => handlePrevGames(page, setPage)}>Prev</button>
+					<button onClick={() => setPage(page + 1)}>Next</button>
+				</div>
 			</div>
-		</div>
+			{content && <Modal>{content}</Modal>}
+		</>
 	);
 };
 

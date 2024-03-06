@@ -13,7 +13,7 @@ const Main = () => {
 	const [page, setPage] = useState(1);
 	const [gameName, setGameName] = useState('');
 	const [platform, setPlatform] = useState('');
-	console.log(platform);
+	const [gender, setGender] = useState('');
 	console.log(gamesList);
 
 	useEffect(() => {
@@ -24,11 +24,16 @@ const Main = () => {
 		getGamesList();
 	}, [page, gameName]);
 
-	const filteredGames = filterGamesByPlatform(gamesList, platform);
+	let filteredGames = filterGamesByPlatform(gamesList, platform);
+	filteredGames = filterGamesByGender(filteredGames, gender);
 
 	return (
 		<main>
-			<Filters setGameName={setGameName} setPlatform={setPlatform} />
+			<Filters
+				setGameName={setGameName}
+				setPlatform={setPlatform}
+				setGender={setGender}
+			/>
 			<GamesList filteredGames={filteredGames} page={page} setPage={setPage} />
 		</main>
 	);
@@ -52,9 +57,19 @@ const filterGamesByPlatform = (gamesList, plat) => {
 	if (!plat) return gamesList;
 
 	const filteredGames = gamesList.filter(game =>
-		game.platforms.some(platform => platform.platform.slug === plat)
+		game.platforms?.some(platform => platform.platform.slug === plat)
 	);
 	return filteredGames;
+};
+
+// FUNCION PARA FILTRAR JUEGOS POR GENERO
+const filterGamesByGender = (filteredGames, gender) => {
+	if (!gender) return filteredGames;
+	const newFilteredGames = [...filteredGames];
+	const updatedFilteredGames = newFilteredGames.filter(games =>
+		games.genres?.some(genre => genre.slug === gender)
+	);
+	return updatedFilteredGames;
 };
 
 export default Main;
