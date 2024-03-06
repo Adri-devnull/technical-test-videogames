@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import GameInfo from '../game-info/GameInfo';
 import Modal from '../modal/Modal';
-import { StyledImg } from './styles';
+import { StyledContainer, StyledImg } from './styles';
 
 const GamesList = ({ filteredGames, page, setPage }) => {
 	const [content, setContent] = useState('');
@@ -10,7 +10,7 @@ const GamesList = ({ filteredGames, page, setPage }) => {
 			<div>
 				<h2>Lista de juegos</h2>
 				{filteredGames.map(game => (
-					<div
+					<StyledContainer
 						key={game.id}
 						onClick={() =>
 							setContent(<GameInfo setContent={setContent} game={game} />)
@@ -18,7 +18,7 @@ const GamesList = ({ filteredGames, page, setPage }) => {
 					>
 						<h3>{game.name}</h3>
 						<StyledImg src={game.background_image} alt='' />
-					</div>
+					</StyledContainer>
 				))}
 				<div>
 					<button onClick={() => handlePrevGames(page, setPage)}>Prev</button>

@@ -6,4 +6,9 @@ const StyledImg = styled.img`
 	object-fit: cover;
 `;
 
-export { StyledImg };
+const StyledContainer = styled.div`
+	width: 400px;
+	cursor: pointer;
+`;
+
+export { StyledContainer, StyledImg };
