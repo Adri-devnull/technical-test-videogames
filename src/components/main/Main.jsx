@@ -17,11 +17,7 @@ const Main = () => {
 	console.log(gamesList);
 
 	useEffect(() => {
-		const getGamesList = async () => {
-			const games = await getAllGames(page, gameName);
-			setGamesList(games);
-		};
-		getGamesList();
+		getGamesList(page, gameName, setGamesList);
 	}, [page, gameName]);
 
 	let filteredGames = filterGamesByPlatform(gamesList, platform);
@@ -70,6 +66,12 @@ const filterGamesByGender = (filteredGames, gender) => {
 		games.genres?.some(genre => genre.slug === gender)
 	);
 	return updatedFilteredGames;
+};
+
+// FUNCION PARA OBTENER LA LISTA DE JUEGOS UNA VEZ YA LOS TENEMOS DESDE LA API
+const getGamesList = async (page, gameName, setGamesList) => {
+	const games = await getAllGames(page, gameName);
+	setGamesList(games);
 };
 
 export default Main;
